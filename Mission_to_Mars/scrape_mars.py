@@ -7,6 +7,7 @@ from flask import Flask, render_template, redirect
 from flask_pymongo import PyMongo
 import pandas as pd
 
+
 # Create a browser instance using splinter
 def init_browser():
     executable_path = {'executable_path': 'chromedriver'}
@@ -154,6 +155,6 @@ def scrape():
     browser.quit()
 
     # retuen Dictionary
-    mars_info
+    return mars_info
 
 
