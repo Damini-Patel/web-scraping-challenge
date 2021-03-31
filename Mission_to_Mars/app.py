@@ -13,17 +13,15 @@ mongo = PyMongo(app, uri="mongodb://localhost:27017/mars_app")
 @app.route("/")
 def index():
     mars_info = mongo.db.mars_info.find_one()
-    print(f'this is mars info: {mars_info}')
     return render_template("index.html", mars=mars_info)
 
 
-@app.route("/scrape")
-def scraper():
+@app.route("/scrape_mars")
+def scrape():
     mars_info = mongo.db.mars_info
     mars_scrape = scrape_mars.scrape()
     # Update the Mongo database using update and upsert=True
     mars_info.update({}, mars_scrape, upsert=True)    
-    # mongo.db.mars.update({}, mars_scrape, upsert=True)
     return redirect("/", code=302)
 
 
