@@ -20,6 +20,7 @@ def scrape():
     browser=init_browser()
     mars_info = {}
 
+############### Get news title and news paragraph ###############
     # Visit the Mars News url
     MarsNews_url = "https://mars.nasa.gov/news/"
     browser.visit(MarsNews_url)
@@ -30,15 +31,9 @@ def scrape():
     article = soup.find("div", class_='list_text')
     news_title = article.find("div", class_="content_title").text
     news_p = article.find("div", class_ ="article_teaser_body").text
-    # # Save the news title as variable
-    # news_title = soup.find('div', class_='content_title')
-    # print(news_title)
-    # # Save the paragraph text as variable
-    # # news_p = soup.find('div', class_='article_teaser_body').text
-    # news_p = soup.find('div', class_='article_teaser_body')
-    # print(news_p)
 
 
+############### Get feature image ###############
     # Visit the Mars News url
     jpl_url = "https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/index.html"
     browser.visit(jpl_url)
@@ -53,22 +48,8 @@ def scrape():
     # Complete the featured image url by adding the base url ---
     featured_image_url = base_url + relative_image_path
 
-
-    # Visit the Mars News url
-    jpl_url = "https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/index.html"
-    browser.visit(jpl_url)
-    # Create HTML object
-    html = browser.html
-    # Parse HTML with BeautifulSoup
-    soup = bs(html, 'html.parser')
-    # Save the hero image url as variable
-    base_url = 'https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/'
-    #Find the src of the correct image (hero Image)
-    relative_image_path = soup.find_all('img')[1]["src"]
-    # Complete the featured image url by adding the base url ---
-    featured_image_url = base_url + relative_image_path
  
-
+############### Get information table ###############
     #use Pandas to scrape the table containing facts about the planet including Diameter, Mass, etc.
     url = 'https://space-facts.com/mars/'
     #Use Pandas to convert the data to a HTML table string.
@@ -79,7 +60,7 @@ def scrape():
     mars_html_df = mars_df.to_html()
 
 
-
+############### Get hemisphere names and images ###############
     base_url = "https://astrogeology.usgs.gov"
     url = "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
     browser.visit(url)
